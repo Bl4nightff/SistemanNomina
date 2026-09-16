@@ -1,17 +1,41 @@
 using SistemaNomina.Models;
+using System.Collections.Generic;
 
-namespace SistemaNomina.Data;
-
-public class EmpleadoRepository
+namespace SistemaNomina.Data
 {
-    private readonly List<Empleado> _empleados = new();
-
-    public void Agregar(Empleado empleado) => _empleados.Add(empleado);
-
-    public List<Empleado> ObtenerTodos() => _empleados;
-
-    public Empleado? BuscarPorNSS(string nss)
+    public class EmpleadoRepository
     {
-        return _empleados.Find(e => e.NumeroSeguroSocial == nss);
+        private List<Empleado> empleados;
+
+        public EmpleadoRepository()
+        {
+            empleados = new List<Empleado>();
+        }
+
+        public void Agregar(Empleado empleado)
+        {
+            empleados.Add(empleado);
+        }
+
+        public List<Empleado> ObtenerTodos()
+        {
+            return empleados;
+        }
+
+        public Empleado BuscarPorNSS(string nss)
+        {
+            Empleado encontrado = null;
+
+            for (int i = 0; i < empleados.Count; i++)
+            {
+                if (empleados[i].NumeroSeguroSocial == nss)
+                {
+                    encontrado = empleados[i];
+                    break;
+                }
+            }
+
+            return encontrado;
+        }
     }
 }
